@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>My first Three.js app</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <script src="lib/js/three.min.js"></script>
+  <script>
+    var carp = [0,0,0];
+    var fing0 = [0,0,0];
+    var fing1 = [0,0,0];
+    var fing2 = [0,0,0];
+    var fing3 = [0,0,0];
+    var fing4 = [0,0,0];
+    var confIBoxPlus = [0,0,0];
+    var confIBoxMinus = [0,0,0];
+    var confBoxCenter = [0,0,0];
+    var confBoxSize = [0,0,0];
+    var carpIBox = [0,0,0];
+    var sizeIBox = [0,0,0];
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    /* ------- Hand --------- */
+    var geometry = new THREE.BoxGeometry(5, 5, 5);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x00ff00
+    });
+    var cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    /* ------- Finger --------- */
+    var geometry = new THREE.BoxGeometry(2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x0000ff
+    });
+    var finger0 = new THREE.Mesh(geometry, material);
+    scene.add(finger0);
+
+    var geometry = new THREE.BoxGeometry(2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x0000ff
+    });
+    var finger1 = new THREE.Mesh(geometry, material);
+    scene.add(finger1);
+
+    var geometry = new THREE.BoxGeometry(2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x0000ff
+    });
+    var finger2 = new THREE.Mesh(geometry, material);
+    scene.add(finger2);
+
+    var geometry = new THREE.BoxGeometry(2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x0000ff
+    });
+    var finger3 = new THREE.Mesh(geometry, material);
+    scene.add(finger3);
+
+    var geometry = new THREE.BoxGeometry(2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x0000ff
+    });
+    var finger4 = new THREE.Mesh(geometry, material);
+    scene.add(finger4);
+
+    /* ------- Box --------- */
+    var geometry = new THREE.BoxGeometry(235.247, 235.247, 147.751);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0xff0000, transparent: true, wireframe: true
+    });
+    var cubeIBox = new THREE.Mesh(geometry, material);
+    scene.add(cubeIBox);
+
+    /* ------- Box --------- */
+    var geometry = new THREE.BoxGeometry(100, 100, 100);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0xff00ff, transparent: true, wireframe: true
+    });
+    var cubeConfBox = new THREE.Mesh(geometry, material);
+    cubeConfBox.geometry.dynamic = true;
+    cubeConfBox.geometry.verticesNeedUpdate = true;
+    scene.add(cubeConfBox);
+
+
+
+    camera.position.z = 800;
+    camera.position.y = 100;
+
+    cube.position.set(0, 0, 0);
+    finger4.position.set(0, 0, 0);
+    finger3.position.set(0, 0, 0);
+    finger2.position.set(0, 0, 0);
+    finger1.position.set(0, 0, 0);
+    finger0.position.set(0, 0, 0);
+
+    function render() {
+      if (carp != null) {
+        cube.position.set(carp[0], carp[1], carp[2]);
+
+        finger0.position.set(fing0[0], fing0[1], fing0[2]);
+        finger1.position.set(fing1[0], fing1[1], fing1[2]);
+        finger2.position.set(fing2[0], fing2[1], fing2[2]);
+        finger3.position.set(fing3[0], fing3[1], fing3[2]);
+        finger4.position.set(fing4[0], fing4[1], fing4[2]);
+
+        cubeIBox.position.set(carpIBox[0], carpIBox[1], carpIBox[2]);
+
+        cubeConfBox.position.set(confBoxCenter[0], confBoxCenter[1], confBoxCenter[2]);
+        cubeConfBox.geometry.dynamic = true;
+        cubeConfBox.geometry.vertices[7].set(confIBoxMinus[0],confIBoxMinus[1], confIBoxMinus[2]);
+        cubeConfBox.geometry.vertices[2].set(confIBoxPlus[0],confIBoxMinus[1], confIBoxMinus[2]);
+        cubeConfBox.geometry.vertices[0].set(confIBoxPlus[0],confIBoxPlus[1], confIBoxMinus[2]);
+        cubeConfBox.geometry.vertices[5].set(confIBoxMinus[0],confIBoxPlus[1], confIBoxMinus[2]);
+        cubeConfBox.geometry.vertices[6].set(confIBoxMinus[0],confIBoxMinus[1], confIBoxPlus[2]);
+        cubeConfBox.geometry.vertices[3].set(confIBoxPlus[0],confIBoxMinus[1], confIBoxPlus[2]);
+        cubeConfBox.geometry.vertices[1].set(confIBoxPlus[0],confIBoxPlus[1], confIBoxPlus[2]);
+        cubeConfBox.geometry.vertices[4].set(confIBoxMinus[0],confIBoxPlus[1], confIBoxPlus[2]);
+        cubeConfBox.geometry.verticesNeedUpdate = true;
+        console.log(cubeConfBox.geometry.vertices);
+      }
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+
+    }
+    render();
+
+
+    var ws;
+    // Support both the WebSocket and MozWebSocket objects
+    if ((typeof (WebSocket) == 'undefined') &&
+      (typeof (MozWebSocket) != 'undefined')) {
+      WebSocket = MozWebSocket;
+    }
+
+    var log = function (obj) {
+      //console.log("currentFrameRate: ", obj.currentFrameRate);
+      //console.log("devices: ",obj.devices);
+      //console.log("gestures: ",obj.gestures);
+      //console.log("carpPosition: ", obj);
+      //console.log(obj.pointables[0].bases[0][0][0]);
+      if (obj.hands.length > 0) {
+        carp[0] = obj.hands[0].palmPosition[0];
+        carp[1] = obj.hands[0].palmPosition[1];
+        carp[2] = obj.hands[0].palmPosition[2];
+
+        fing0[0] = obj.pointables[0].bases[0][0][0];
+        fing0[1] = obj.pointables[0].bases[0][0][1];
+        fing0[2] = obj.pointables[0].bases[0][0][2];
+
+        fing1[0] = obj.pointables[1].bases[0][0][0];
+        fing1[1] = obj.pointables[1].bases[0][0][1];
+        fing1[2] = obj.pointables[1].bases[0][0][2];
+
+        fing2[0] = obj.pointables[2].bases[0][0][0];
+        fing2[1] = obj.pointables[2].bases[0][0][1];
+        fing2[2] = obj.pointables[2].bases[0][0][2];
+
+        fing3[0] = obj.pointables[3].bases[0][0][0];
+        fing3[1] = obj.pointables[3].bases[0][0][1];
+        fing3[2] = obj.pointables[3].bases[0][0][2];
+
+        fing4[0] = obj.pointables[4].bases[0][0][0];
+        fing4[1] = obj.pointables[4].bases[0][0][1];
+        fing4[2] = obj.pointables[4].bases[0][0][2];
+
+        sizeIBox[0] = obj.interactionBox.size[0];
+        sizeIBox[1] = obj.interactionBox.size[1];
+        sizeIBox[2] = obj.interactionBox.size[2];
+        carpIBox[0] = obj.interactionBox.center[0];
+        carpIBox[1] = obj.interactionBox.center[1];
+        carpIBox[2] = obj.interactionBox.center[2];
+
+        if (obj.hands[0].confidence > 0.7) {
+          var changes = false;
+          if (obj.hands[0].palmPosition[0] > confIBoxPlus[0]) {
+            confIBoxPlus[0] = obj.hands[0].palmPosition[0];
+            changes = true;
+          }
+          if (obj.hands[0].palmPosition[1] > confIBoxPlus[1]) {
+            confIBoxPlus[1] = obj.hands[0].palmPosition[1];
+            changes = true;
+          }
+          if (obj.hands[0].palmPosition[2] > confIBoxPlus[2]) {
+            confIBoxPlus[2] = obj.hands[0].palmPosition[2];
+            changes = true;
+          }
+          if (obj.hands[0].palmPosition[0] < confIBoxMinus[0]) {
+            confIBoxMinus[0] = obj.hands[0].palmPosition[0];
+            changes = true;
+          }
+          if (obj.hands[0].palmPosition[1] < confIBoxMinus[1]) {
+            confIBoxMinus[1] = obj.hands[0].palmPosition[1];
+            changes = true;
+          }
+          if (obj.hands[0].palmPosition[2] < confIBoxMinus[2]) {
+            confIBoxMinus[2] = obj.hands[0].palmPosition[2];
+            changes = true;
+          }
+          if (changes) {
+            confBoxCenter[0] = (confIBoxPlus[0] - (confIBoxPlus[0] - confIBoxMinus[0])) / 2;
+            confBoxCenter[1] = (confIBoxPlus[1] - (confIBoxPlus[1] - confIBoxMinus[1])) / 2;
+            confBoxCenter[2] = (confIBoxPlus[2] - (confIBoxPlus[2] - confIBoxMinus[2])) / 2;
+            confBoxSize[0] = (confIBoxPlus[0] - confIBoxMinus[0]);
+            confBoxSize[1] = (confIBoxPlus[1] - confIBoxMinus[1]);
+            confBoxSize[2] = (confIBoxPlus[2] - confIBoxMinus[2]);
+            console.log("Size: "+confBoxSize);
+            console.log("Center: "+confBoxCenter);
+          }
+        }
+        //console.log(cube.position.y);
+        if (cube.position.x > 235.247/2 || cube.position.x < -235.247/2) {
+          console.log("Du verlässt die Box!! x");
+        }
+        if (cube.position.y > (235.247)/2+200 || cube.position.y < (-235.247)/2+200) {
+          console.log("Du verlässt die Box!! y");
+        }
+        if (cube.position.z > 147.751/2 || cube.position.z < -147.751/2) {
+          console.log("Du verlässt die Box!! z");
+        }
+      }
+      //console.log("id: ", obj.id);
+      //console.log("interactionBox: ",obj.interactionBox);
+      //console.log("pointables: ",obj.pointables);
+      //console.log("r: ",obj.r);
+      //console.log("s: ",obj.s);
+      //console.log("t: ",obj.t);
+      //console.log("timestamp: ",obj.timestamp);
+    }
+
+    // Create the socket with event handlers
+    function init() {
+      // Create and open the socket
+      ws = new WebSocket("ws://localhost:6437/v6.json");
+
+      // On successful connection
+      ws.onopen = function (event) {
+        var enableMessage = JSON.stringify({
+          enableGestures: true
+        });
+        ws.send(enableMessage); // Enable gestures
+        ws.send(JSON.stringify({
+          focused: true
+        })); // claim focus
+      };
+      var i = 0;
+      // On message received
+      ws.onmessage = function (event) {
+        if (i<8000) {
+          i++;
+          var obj = JSON.parse(event.data);
+          var str = JSON.stringify(obj, undefined, 2);
+          //console.log(obj);
+          if (obj !== undefined)
+            log(obj);
+        }
+
+
+      };
+
+      // On socket close
+      ws.onclose = function (event) {
+        ws = null;
+      }
+
+      // On socket error
+      ws.onerror = function (event) {
+        console.error("Received error");
+      };
+    }
+    init();
+  </script>
+</body>
+
+</html>

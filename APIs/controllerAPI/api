@@ -1,0 +1,21 @@
+name controllerapi
+version 0.0.1-SNAPSHOT
+package de.hawhamburg.csti.controller
+
+msg Up ()
+msg Down ()
+msg Left ()
+msg Right ()
+msg Front ()
+msg Back ()
+
+msg LeftRotation ()
+msg RightRotation ()
+msg FrontRotation ()
+msg BackRotation ()
+
+msg One()
+msg Two()
+msg Three()
+msg Four()
+msg Five()

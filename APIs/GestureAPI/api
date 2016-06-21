@@ -1,0 +1,12 @@
+name gestureapi
+version 0.0.3-SNAPSHOT
+package de.hawhamburg.csti.gesture
+
+msg Position (xPos : Double, yPos : Double, zPos : Double)
+msg Rotation (frontRotation : Double, sideRotation : Double)
+
+msg thumb()
+msg index()
+msg middle()
+msg ring()
+msg pinky()

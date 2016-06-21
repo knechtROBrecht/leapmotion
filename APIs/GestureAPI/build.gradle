@@ -1,0 +1,16 @@
+buildscript {
+    repositories {
+	mavenLocal()
+	maven {
+		url cstiNexusURLPrivate
+		credentials {
+			username cstiNexusUser
+			password cstiNexusPassword
+		}
+	}
+    }
+    dependencies {
+        classpath group: 'de.hawhamburg.csti.api', name: 'gradle-api-generator', version: '0.0.4-SNAPSHOT'
+    }
+}
+apply plugin: 'api-generator'
